@@ -29,7 +29,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-08-13'
 tags:
 - Company
 - Sales Tech
@@ -39,7 +39,39 @@ tags:
 - Distribution Management
 - CRM
 - Collections
-apis: []
+apis:
+- name: Vymo Platform API
+  description: >-
+    Vymo's enterprise platform API, used by banks, insurers and asset managers to push
+    leads into Vymo, sync users and hierarchies, read activity and engagement records, and
+    connect Vymo to CRM and core systems. The API is real and operating but it is NOT
+    public: its reference is hosted on a private Read the Docs Business site
+    (docs.getvymo.com) that returns "Log in to view this documentation" to anonymous
+    requests, and the API host answers every anonymous request with
+    {"authentication_error":"unauthorized"}. No OpenAPI, GraphQL SDL, AsyncAPI, Postman
+    collection or SDK is published anywhere. Access is granted through an enterprise
+    agreement rather than self-serve signup.
+  humanURL: https://vymo.com/integrations/
+  baseURL: https://app.lms.getvymo.com
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/vymo.png
+  tags:
+  - Sales Engagement
+  - Lead Management
+  - Financial Services
+  - Distribution Management
+  x-access: gated
+  x-access-note: >-
+    Established by probe on 2026-08-13, not by claim. docs.getvymo.com resolves to
+    Read the Docs Business and 302s anonymous requests to
+    app.readthedocs.com/accounts/login/. app.lms.getvymo.com returns HTTP 200 with the
+    39-byte body {"authentication_error":"unauthorized"} for every path probed, including
+    /openapi.json, /swagger.json, /v1/openapi.json, /api-docs and every /.well-known/*.
+  x-not-our-contract: >-
+    Third-party portals publish their own interfaces INTO Vymo — e.g. HDFC Bank's
+    "Vymo_Push_Lead" listing at developer.hdfc.bank.in/vymopushlead, which the portal itself
+    labels "API Developed By: Outsource" and serves from HDFC's host with no spec link.
+    That is HDFC's contract on HDFC's domain and was deliberately NOT harvested as Vymo's.
+  properties: []
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -48,20 +80,65 @@ maintainers:
 common:
 - type: DomainSecurity
   url: security/vymo-domain-security.yml
+- type: Packages
+  url: packages/vymo-packages.yml
+- type: LLMsTxt
+  url: llms/vymo-llms.txt
+- type: Plans
+  url: plans/vymo-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/vymo-rate-limits.yml
 - type: Website
   url: https://www.vymo.com
 - type: Blog
   url: https://vymo.com/blog/
-- type: Pricing
-  url: https://vymo.com/pricing/
 - type: Support
   url: https://vymo.com/resources/
+- type: HelpCenter
+  url: https://getvymo.com/help-and-support
+- type: GitHubOrganization
+  url: https://github.com/Vymo-Inc
 - type: TermsOfService
   url: https://vymo.com/terms-of-service/
 - type: PrivacyPolicy
   url: https://vymo.com/privacy/
 x-enrichment:
-  date: '2026-07-21'
+  date: '2026-08-13'
   status: minimal
-  artifacts_added: 1
+  artifacts_added: 5
   pass: local-v1
+x-coverage:
+  state: gated
+  reason: customer-only-docs
+  detail: >-
+    Vymo's API reference is hosted on a private Read the Docs Business site at
+    docs.getvymo.com, which serves anonymous requests a "Log in to view this documentation"
+    page and 302s them to app.readthedocs.com/accounts/login/, while the API host
+    app.lms.getvymo.com returns {"authentication_error":"unauthorized"} on every path.
+  evidence:
+  - url: https://docs.getvymo.com/en/latest/
+    status: 200
+  - url: https://app.lms.getvymo.com/openapi.json
+    status: 200
+  - url: https://getvymo.com/developers
+    status: 404
+  - url: https://www.vymo.com/llms.txt
+    status: 200
+    note: soft-404 HTML shell, not a document
+  checked: '2026-08-13'
+x-no-pointer-emitted:
+- artifact: well-known/vymo-well-known.yml
+  withheld_types: [WellKnown, SecurityTxt]
+  reason: >-
+    All 18 /.well-known/ probes missed. getvymo.com returned honest 404s; www.vymo.com and
+    app.lms.getvymo.com returned 200s carrying a soft-404 HTML shell and a JSON auth error
+    respectively — neither is a served document. The probe record is kept as valid recorded
+    absence, but no pointer is emitted, because the pointer would assert Vymo serves a
+    surface it does not.
+x-pointer-removed:
+- type: Pricing
+  url: https://vymo.com/pricing/
+  reason: >-
+    Removed 2026-08-13. The URL returns HTTP 200 but serves the site's catch-all shell
+    titled "404 Page | Vymo", byte-identical (208,320 bytes) to a nonsensical control path.
+    Vymo publishes no pricing page; the pointer was crediting a soft-404.
