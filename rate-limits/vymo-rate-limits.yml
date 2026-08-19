@@ -1,0 +1,24 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  Vymo public surface sweep, 2026-08-13 — vymo.com, getvymo.com, docs.getvymo.com,
+  app.lms.getvymo.com.
+limit_count: 0
+headers_documented: false
+retry_after: unknown
+exhaustion_status: unknown
+note: >-
+  Vymo publishes no rate-limit documentation. The API reference that would carry limits and
+  the runtime response headers is on a private Read the Docs Business site
+  (https://docs.getvymo.com/), which returns "Log in to view this documentation" and
+  redirects anonymous requests to app.readthedocs.com/accounts/login/. No limits could be
+  observed live either: https://app.lms.getvymo.com returns
+  {"authentication_error":"unauthorized"} on every path and emits no X-RateLimit-*,
+  RateLimit-* or Retry-After header on the anonymous rejection. An honest zero: limits may
+  well exist for customers, but nothing about them is public.
+limits: []
+response_headers: []
+evidence:
+- {url: 'https://docs.getvymo.com/', status: 200, result: redirects to Read the Docs Business login}
+- {url: 'https://app.lms.getvymo.com/openapi.json', status: 200, result: '{"authentication_error":"unauthorized"} — no rate-limit headers'}
+- {url: 'https://getvymo.com/developers', status: 404}

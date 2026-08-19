@@ -1,0 +1,59 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  registry.npmjs.org search + package metadata endpoints, cross-checked against the
+  Vymo-Inc GitHub organization (https://github.com/Vymo-Inc). PyPI, RubyGems, crates.io,
+  NuGet, Maven Central and pkg.go.dev were also searched and returned no Vymo package.
+note: >-
+  Vymo publishes no API client library / SDK in any public registry. The two npm packages
+  below are first-party Vymo engineering artifacts (a webpack build plugin and an internal
+  config-service polling stub), NOT clients for the Vymo platform API — so no `SDKs`
+  pointer is emitted for this repo and `sdk_count` is correctly zero. Vymo's platform API
+  is delivered to enterprise customers under a signed agreement; its reference lives on a
+  private Read the Docs Business site (docs.getvymo.com) and no distributable client
+  library accompanies it.
+packages:
+- language: javascript
+  registry: npm
+  name: '@vymo/reactprops-type-extractor'
+  url: https://www.npmjs.com/package/@vymo/reactprops-type-extractor
+  install: npm install @vymo/reactprops-type-extractor
+  official: true
+  api_client: false
+  version: 0.0.5
+  published: '2025-05-07'
+  repository: https://github.com/Vymo-Inc/reactProps-type-extractor
+  description: >-
+    A webpack plugin that extracts TypeScript component prop types at build time.
+  official_evidence: >-
+    Published under the @vymo npm scope and mirrored by the Vymo-Inc GitHub organization
+    repo Vymo-Inc/reactProps-type-extractor.
+- language: javascript
+  registry: npm
+  name: vymo-config-stub-js
+  url: https://www.npmjs.com/package/vymo-config-stub-js
+  install: npm install vymo-config-stub-js
+  official: unverified
+  api_client: false
+  version: 1.3.6
+  published: '2024-03-05'
+  repository: null
+  description: >-
+    Stub for polling a config service to fetch, update and cache configuration locally to
+    the service.
+  note: >-
+    Named for Vymo and shaped like Vymo internal infrastructure (9 published versions), but
+    the package declares no repository, no homepage and no organization scope, so
+    first-party ownership could not be proven. Recorded as unverified rather than claimed.
+counts:
+  total: 2
+  official: 1
+  api_clients: 0
+registries_checked:
+- {registry: npm, result: 2 packages, api_clients: 0}
+- {registry: pypi, result: none, evidence: 'https://pypi.org/pypi/vymo/json -> 404'}
+- {registry: rubygems, result: none}
+- {registry: crates.io, result: none}
+- {registry: nuget, result: none}
+- {registry: maven-central, result: none}
+- {registry: pkg.go.dev, result: none}

@@ -1,0 +1,26 @@
+generated: '2026-08-13'
+method: searched
+source: https://vymo.com/pricing/
+plan_count: 0
+pricing_model: enterprise-quote
+self_serve: false
+free_tier: false
+trial: false
+note: >-
+  Vymo publishes NO pricing page and NO plan tiers. https://vymo.com/pricing/ was probed on
+  2026-08-13: it returns HTTP 200 but the body is the site's 208,320-byte catch-all shell
+  titled "404 Page | Vymo" — byte-identical to a deliberately nonsensical control path — so
+  the page does not exist. https://vymo.com/us/pricing/ returns the same soft-404. The
+  apis.yml `Pricing` pointer that previously targeted https://vymo.com/pricing/ was removed
+  in this pass because it pointed at a soft-404.
+
+  Vymo sells to banks, insurers and asset managers under enterprise agreements; commercial
+  terms are set through https://vymo.com/contact-us/ and a sales conversation. No seat
+  price, no quota, no overage schedule and no published limits are available to a member of
+  the public. This is an honest zero, not an unchecked field.
+plans: []
+evidence:
+- {url: 'https://vymo.com/pricing/', status: 200, result: soft-404 shell, title: '404 Page | Vymo'}
+- {url: 'https://vymo.com/us/pricing/', status: 200, result: soft-404 shell, title: '404 Page | Vymo'}
+- {url: 'https://vymo.com/this-path-does-not-exist-abc123/', status: 200, result: control path, note: byte-identical 208320-byte response proves the soft-404}
+- {url: 'https://vymo.com/contact-us/', status: 200, result: real page, title: 'Contact Us | Vymo'}

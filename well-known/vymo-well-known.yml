@@ -1,0 +1,56 @@
+generated: '2026-08-13'
+method: probed
+source: live GET probes, 2026-08-13
+note: >-
+  RECORDED ABSENCE. No /.well-known/ document was served by any Vymo host. No `WellKnown`
+  and no `SecurityTxt` pointer is emitted in apis.yml, because none of these paths returned
+  a real document.
+
+  IMPORTANT — two different false-positive shapes were encountered and both are recorded as
+  MISSES, not hits:
+  (1) www.vymo.com is a Gatsby site whose catch-all answers HTTP 200 with a 208,320-byte
+      HTML page titled "404 Page | Vymo" for EVERY unknown path, including every
+      /.well-known/* path and /llms.txt. A byte-identical response to a deliberately
+      nonsensical control path (/this-path-does-not-exist-abc123/) proves it is a soft-404,
+      not a served document.
+  (2) app.lms.getvymo.com answers HTTP 200 with the 39-byte JSON body
+      {"authentication_error":"unauthorized"} for every path, including /.well-known/*.
+      That is an auth gate, not a document.
+  getvymo.com is the only Vymo host that returns honest HTTP 404s, and it 404s on all five
+  paths.
+hosts:
+- host: https://getvymo.com
+  soft_404: false
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://www.vymo.com
+  soft_404: true
+  soft_404_evidence: >-
+    Every unknown path returns 200 text/html, 208320 bytes, <title>404 Page | Vymo</title>;
+    byte-identical to the control path /this-path-does-not-exist-abc123/.
+  documents:
+  - {path: /.well-known/security.txt, status: 200, result: soft-404 HTML shell, document: false}
+  - {path: /.well-known/agent-card.json, status: 200, result: soft-404 HTML shell, document: false}
+  - {path: /.well-known/agent.json, status: 200, result: soft-404 HTML shell, document: false}
+  - {path: /llms.txt, status: 200, result: soft-404 HTML shell, document: false}
+- host: https://app.lms.getvymo.com
+  soft_404: true
+  soft_404_evidence: >-
+    Every path returns 200 application/json, 39 bytes,
+    {"authentication_error":"unauthorized"} — the tenant auth gate, not a document.
+  documents:
+  - {path: /.well-known/security.txt, status: 200, result: auth-gate JSON, document: false}
+  - {path: /.well-known/agent-card.json, status: 200, result: auth-gate JSON, document: false}
+  - {path: /.well-known/openid-configuration, status: 200, result: auth-gate JSON, document: false}
+summary:
+  paths_probed: 18
+  documents_found: 0
+  security_txt: false
+  agent_card: false
+  oauth_metadata: false
