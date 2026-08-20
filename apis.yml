@@ -34,6 +34,15 @@ tags:
 - Company
 - Sales Tech
 - Sales Engagement
+- Financial-Services
+- Insurance
+- Distribution Management
+- CRM
+- Collection
+tags_raw:
+- Company
+- Sales Tech
+- Sales Engagement
 - Financial Services
 - Insurance
 - Distribution Management
@@ -55,6 +64,11 @@ apis:
   baseURL: https://app.lms.getvymo.com
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/vymo.png
   tags:
+  - Sales Engagement
+  - Lead Management
+  - Financial-Services
+  - Distribution Management
+  tags_raw:
   - Sales Engagement
   - Lead Management
   - Financial Services
