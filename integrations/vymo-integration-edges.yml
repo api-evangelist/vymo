@@ -1,16 +1,34 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/vymo/integrations
 - https://n8n.io/integrations/vymo/
 - https://composio.dev/toolkits/vymo
 - https://monid.ai/tools/vymo
 checked:
+- duck-creek/integrations/duck-creek-integration-edges.yml
 - https://composio.dev/toolkits/vymo
 - https://monid.ai/tools/vymo
 - https://n8n.io/integrations/vymo/
 - https://zapier.com/apps/vymo/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: Duck Creek (own)
+  partner: duck-creek
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.duckcreek.com/partner/vymo/
+  mirror_of: duck-creek/integrations/duck-creek-integration-edges.yml
+  apps:
+  - Vymo
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Solution
 templates: []
